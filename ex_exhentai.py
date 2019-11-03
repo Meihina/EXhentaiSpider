@@ -280,7 +280,7 @@ if __name__ == "__main__":
     select4.pack()
     select5 = tkinter.Radiobutton(tk, text='wes', value=5, variable=r, command=wes)
     select5.pack()
-    select6 = tkinter.Radiobutton(tk, text='无限制', value=5, variable=r, command=wxz)
+    select6 = tkinter.Radiobutton(tk, text='无限制', value=6, variable=r, command=wxz)
     select6.pack()
     l1 = tkinter.Label(tk, text="\n以关键字搜索本子")  # 标签
     l1.pack()
