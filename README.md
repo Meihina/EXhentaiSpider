@@ -1,6 +1,6 @@
 # EXhentaiSpider
-* 一个基于Python3+的exhentai爬虫  
-* 需要BeautifulSoup库和requests库，具有tkinter可视化界面
+* 一个基于Python3+的exhentai爬虫，具有tkinter可视化界面
+* 需要安装BeautifulSoup库和requests库，将所有文件放同目录然后运行ex_exhentai.py即可
 * 要cookies
 # 运作模式
 * 种子模式  
