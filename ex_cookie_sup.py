@@ -42,11 +42,3 @@ def tk_cookier():
     tkinter.Button(ytm, text="确定", command=getuser_aw).pack()  # command绑定获取文本框内容方法
 
     ytm.mainloop()  # 进入主循环
-
-
-
-    # "igneous": "0ca092e8d",
-    # "ipb_member_id": "2470365",
-    # "ipb_pass_hash": "ec7ae285e201c2ee01e9e223f51063ab",
-    # "s": "259ecd6c7",
-    # "sk": "ac7jqbvn5o6ppw3ogm3280fbl9xj",
