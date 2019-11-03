@@ -1,6 +1,7 @@
 # EXhentaiSpider
 * 一个基于Python3+的exhentai爬虫  
 * 需要BeautifulSoup库和requests库，具有tkinter可视化界面
+* 要cookies
 # 运作模式
 * 种子模式  
     * 根据关键字和数量回调结果的封面和种子链接 提供简单的tag选择模式  
