@@ -8,5 +8,5 @@
 * 下载模式
     * 提供url下载漫画内容 可按顺序执行多个(5个)
 # 图例
-![image](https://github.com/Meihina/EXhentaiSpider/raw/master/pic.png)
+![image](https://github.com/Meihina/EXhentaiSpider/blob/master/pic.png)
 
