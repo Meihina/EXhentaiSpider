@@ -35,13 +35,13 @@ class main_exhentai(object):
         self.surl = ''
 
     def requester(self, target, classname, type):
-        req = requests.get(target, cookies=self.cookie, headers=self.head)
+        req = requests.get(target, cookies=self.cookie, headers=self.head,timeout = 30)
         bf = BeautifulSoup(req.text, "html.parser")
         texts = bf.find_all(type, class_=classname)
         return texts
 
     def requester_id(self, target, idname, type):
-        req = requests.get(target, cookies=self.cookie, headers=self.head)
+        req = requests.get(target, cookies=self.cookie, headers=self.head,timeout = 30)
         bf = BeautifulSoup(req.text, "html.parser")
         texts = bf.find_all(type, id=idname)
         return texts
