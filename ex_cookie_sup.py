@@ -25,7 +25,7 @@ def tk_cookier():
     ytm.title("EXhentai")  # 设置窗口标题
     ytm.geometry("500x200")  # 设置窗口尺寸
 
-    l1 = tkinter.Label(ytm, text="请输入cookies,以igneous,id,hash,s,sk的顺序(s和sk可以不填）")  # 标签
+    l1 = tkinter.Label(ytm, text="请输入cookies,以igneous,id,hash,s,sk的顺序(s和sk可以不填*但是种子模式就没法用了！*）")  # 标签
     l1.pack()  # 指定包管理器放置组件
 
     igneous = tkinter.Entry(ytm)
