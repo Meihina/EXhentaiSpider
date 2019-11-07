@@ -7,7 +7,4 @@
     * 根据关键字和数量回调结果的封面和种子链接并批量下载 提供简单的tag选择模式  
 * 下载模式
     * 提供url下载漫画内容 可按顺序执行多个(5个)
-    * 基本解决了某些图下不了或者崩图的情况
-# 图例
-![image](https://github.com/Meihina/EXhentaiSpider/blob/master/pic.png)
 
