@@ -161,10 +161,12 @@ if __name__ == "__main__":
     def cirdo(beg, pagenum, surl, path):
         for cr in range(beg, pagenum + 1):
             req = req_do(surl)
+            while req is None:
+                req = req_do(surl)
+            print(req[1])  # 本页图片
             me.req = req[1]  # 记忆url
             me.cr = int(cr)  # 记忆页码
             print(req[0])  # 下页url
-            print(req[1])  # 本页图片
             picdo(req[1], path, str(cr), surl)  # 载图
             surl = req[0]  # 下一页
             print('完成' + str(cr) + '张')
@@ -206,8 +208,7 @@ if __name__ == "__main__":
         try:
             texts2 = me.requester_id(surl, 'i3', 'div')
         except requests.exceptions.Timeout:
-            print("请求超时了呢")
-            req_do(surl)
+            print("请求超时了呢,重试中……")
         else:
             req = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',str(texts2))
             return req
