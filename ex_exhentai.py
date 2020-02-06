@@ -171,6 +171,7 @@ if __name__ == "__main__":
                     index2 = 1
                     continue
                 else:
+                    print('中断处找到了')
                     index1 = 1
 
             if index2 == 1:
@@ -312,6 +313,7 @@ if __name__ == "__main__":
     tkinter.Button(tk, text="爬！", command=search).pack()
     tkinter.Label(tk, text="\n下载模式", fg='blue').pack()
     tkinter.Label(tk, text="请给出你的页面链接(https://exhentai.org/g/xxx/xxx/),可同时执行多个漫画的下载").pack()
+    tkinter.Label(tk, text="如果不幸因为意外中断了，重新再爬一次就行，会自动找到上次的中断点").pack()
     url1 = tkinter.Entry()
     url1.pack()
     url2 = tkinter.Entry()
