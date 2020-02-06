@@ -1,10 +1,12 @@
 # -*- coding:UTF-8 -*-
 from bs4 import BeautifulSoup
 import requests
+import threading
 import ex_head
 import ex_cookie_sup
 import re
 import os
+import time
 import tkinter
 from pathlib import Path
 
@@ -158,34 +160,50 @@ if __name__ == "__main__":
     me = main_exhentai()
 
 
-    def cirdo(beg, pagenum, surl, path):
+    def cirdo(beg, pagenum, surl, path, modourl):
+        index1 = 0
+        index2 = 0
         for cr in range(beg, pagenum + 1):
+            if index1 == 0:
+                file = Path(path + str(cr) + '.jpg')
+                if file.is_file():
+                    print(str(cr) + '图片已存在')
+                    index2 = 1
+                    continue
+                else:
+                    index1 = 1
+
+            if index2 == 1:
+                turn = cr // 20
+                newurl = modourl + '/?p=' + str(turn)
+                re_search = '(https://exhentai.org/s/\w+/\d+-'+ str(cr) +')'
+                texts = me.requester(newurl, 'gdtl', 'div')
+                hurl = re.search(re_search, str(texts))
+                surl = hurl.group(0)
+                index2 = 0
+
             req = req_do(surl)
             while req is None:
                 req = req_do(surl)
+                time.sleep(1)
             print(req[1])  # 本页图片
-            me.req = req[1]  # 记忆url
-            me.cr = int(cr)  # 记忆页码
-            print(req[0])  # 下页url
+            time.sleep(1)
             picdo(req[1], path, str(cr), surl)  # 载图
+            time.sleep(1)
             surl = req[0]  # 下一页
             print('完成' + str(cr) + '张')
 
 
     def picdo(url, path, name, surl):
-        file = Path(path + name + '.jpg')
-        if file.is_file():
-            print('图片已存在')
-            return
         me.conut += 1
         if me.conut % 10 == 0:
             me.head = ex_head.random_head()  # 更换请求头，防止被杀
             print(me.head)
         try:
-            p = requests.get(url, cookies=me.cookie, headers=me.head, timeout=10)  # 请求图片连接
+            p = requests.get(url, cookies=me.cookie, headers=me.head, timeout=15)  # 请求图片连接
         except requests.exceptions.ConnectionError as e:
             print('超时了，换源中……')
-
+            time.sleep(1)
             req = requests.get(surl, cookies=me.cookie, headers=me.head)  #换源
             bf = BeautifulSoup(req.text, "html.parser")
             texts = bf.find_all('div', id='i6')
@@ -208,7 +226,7 @@ if __name__ == "__main__":
         try:
             texts2 = me.requester_id(surl, 'i3', 'div')
         except requests.exceptions.Timeout:
-            print("请求超时了呢,重试中……")
+            print("请求超时了呢")
         else:
             req = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',str(texts2))
             return req
@@ -249,8 +267,8 @@ if __name__ == "__main__":
             if upseturl[i] != '':
                 me.url = upseturl[i]
                 me.downloadmode()
-                cirdo(me.cr, me.pagenum, me.surl, me.path)
-                print(me.doname + '下载完了嗷 铁汁')
+                t = threading.Thread(target=cirdo, args=(me.cr, me.pagenum, me.surl, me.path, upseturl[i]))
+                t.start()
 
     def dm():
         main_exhentai.search_word = '?f_cats=1017&f_search='
@@ -293,7 +311,7 @@ if __name__ == "__main__":
     num.pack()
     tkinter.Button(tk, text="爬！", command=search).pack()
     tkinter.Label(tk, text="\n下载模式", fg='blue').pack()
-    tkinter.Label(tk, text="请给出你的页面链接(https://exhentai.org/g/xxx/xxx/),可按顺序执行多个。如果不幸卡死了关掉重来").pack()
+    tkinter.Label(tk, text="请给出你的页面链接(https://exhentai.org/g/xxx/xxx/),可同时执行多个漫画的下载").pack()
     url1 = tkinter.Entry()
     url1.pack()
     url2 = tkinter.Entry()
@@ -306,5 +324,3 @@ if __name__ == "__main__":
     url5.pack()
     tkinter.Button(tk, text="给爷爬！", command=do).pack()
     tk.mainloop()
-
-    
