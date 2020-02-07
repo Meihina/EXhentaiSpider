@@ -186,20 +186,17 @@ if __name__ == "__main__":
                 req = req_do(surl)
                 time.sleep(1)
             print(req[1])  # 本页图片
-            time.sleep(1)
             t = threading.Thread(target=picdo, args=(req[1], path, str(cr), surl))
             t.start()
-            time.sleep(1)
             surl = req[0]  # 下一页
-
 
     def picdo(url, path, name, surl):
         me.conut += 1
-        if me.conut % 10 == 0:
+        if me.conut % 3 == 0:
             me.head = ex_head.random_head()  # 更换请求头，防止被杀
             print(me.head)
         try:
-            p = requests.get(url, cookies=me.cookie, headers=me.head, timeout=20)  # 请求图片连接
+            p = requests.get(url, cookies=me.cookie, headers=me.head, timeout=10)  # 请求图片连接
         except requests.exceptions.ConnectionError as e:
             print('超时了，换源中……')
             time.sleep(1)
@@ -252,7 +249,6 @@ if __name__ == "__main__":
             me.donwloader()
             main_exhentai.search_word = '?page='+ str(i+1)  +'&f_search=' + mw
             me.num -= 25
-
 
     def do():
         me = main_exhentai()
@@ -312,7 +308,7 @@ if __name__ == "__main__":
     tkinter.Button(tk, text="爬！", command=search).pack()
     tkinter.Label(tk, text="\n下载模式", fg='blue').pack()
     tkinter.Label(tk, text="请给出你的页面链接(https://exhentai.org/g/xxx/xxx/),可同时执行多个漫画的下载（3个比较稳定）").pack()
-    tkinter.Label(tk, text="如果不幸因为意外中断了，重新再爬一次就行，会自动找到上次的中断点").pack()
+    tkinter.Label(tk, text="如果不幸因为意外中断了，或者缺页，重新再爬一次就行，会自动找到中断点").pack()
     url1 = tkinter.Entry()
     url1.pack()
     url2 = tkinter.Entry()
