@@ -213,6 +213,7 @@ if __name__ == "__main__":
                 sp = requests.get(sreq[1], cookies=me.cookie, headers=me.head, timeout=30)  # 请求图片连接
                 with open(path + name + '.jpg', 'wb') as f:
                     f.write(sp.content)
+                print('完成第' + name + '张')
             except requests.exceptions.ConnectionError as e:
                 print('这张好像下不了……')
         else:
