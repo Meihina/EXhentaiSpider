@@ -198,7 +198,7 @@ if __name__ == "__main__":
             me.head = ex_head.random_head()  # 更换请求头，防止被杀
             print(me.head)
         try:
-            p = requests.get(url, cookies=me.cookie, headers=me.head, timeout=30)  # 请求图片连接
+            p = requests.get(url, cookies=me.cookie, headers=me.head, timeout=18)  # 请求图片连接
         except requests.exceptions.ConnectionError as e:
             print('超时了，换源中……')
             time.sleep(1)
