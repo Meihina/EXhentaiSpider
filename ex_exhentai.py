@@ -170,8 +170,6 @@ if __name__ == "__main__":
                     print(str(cr) + '图片已存在')
                     index2 = 1
                     continue
-                else:
-                    index1 = 1
 
             if index2 == 1:
                 print('中断处找到了')
