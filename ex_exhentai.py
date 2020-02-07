@@ -139,8 +139,8 @@ class main_exhentai(object):
         self.pagenum = int(pagenum.group(1))
         print(pagenum.group(1))
 
-        name_te = self.requester_id(self.url, 'gj', 'h1')
-        name = re.search('<h1 id="gj">(.*)</h1>', str(name_te)).group(1)  # 获得名字
+        name_te = self.requester_id(self.url, 'gn', 'h1')
+        name = re.search('<h1 id="gn">(.*)</h1>', str(name_te)).group(1)  # 获得名字
         ext = ['?', '*', ':', '\"', '<', '>', '\\', '/', '|']
         for s in ext:  # 删除非法字符
             name = name.replace(s, '')
@@ -171,10 +171,10 @@ if __name__ == "__main__":
                     index2 = 1
                     continue
                 else:
-                    print('中断处找到了')
                     index1 = 1
 
             if index2 == 1:
+                print('中断处找到了')
                 turn = cr // 20
                 newurl = modourl + '/?p=' + str(turn)
                 re_search = '(https://exhentai.org/s/\w+/\d+-'+ str(cr) +')'
@@ -189,10 +189,10 @@ if __name__ == "__main__":
                 time.sleep(1)
             print(req[1])  # 本页图片
             time.sleep(1)
-            picdo(req[1], path, str(cr), surl)  # 载图
+            t = threading.Thread(target=picdo, args=(req[1], path, str(cr), surl))
+            t.start()
             time.sleep(1)
             surl = req[0]  # 下一页
-            print('完成' + str(cr) + '张')
 
 
     def picdo(url, path, name, surl):
@@ -201,7 +201,7 @@ if __name__ == "__main__":
             me.head = ex_head.random_head()  # 更换请求头，防止被杀
             print(me.head)
         try:
-            p = requests.get(url, cookies=me.cookie, headers=me.head, timeout=15)  # 请求图片连接
+            p = requests.get(url, cookies=me.cookie, headers=me.head, timeout=20)  # 请求图片连接
         except requests.exceptions.ConnectionError as e:
             print('超时了，换源中……')
             time.sleep(1)
@@ -221,6 +221,7 @@ if __name__ == "__main__":
         else:
             with open(path + name + '.jpg', 'wb') as f:
                 f.write(p.content)
+            print('完成第' + name + '张')
 
 
     def req_do(surl):
@@ -312,7 +313,7 @@ if __name__ == "__main__":
     num.pack()
     tkinter.Button(tk, text="爬！", command=search).pack()
     tkinter.Label(tk, text="\n下载模式", fg='blue').pack()
-    tkinter.Label(tk, text="请给出你的页面链接(https://exhentai.org/g/xxx/xxx/),可同时执行多个漫画的下载").pack()
+    tkinter.Label(tk, text="请给出你的页面链接(https://exhentai.org/g/xxx/xxx/),可同时执行多个漫画的下载（3个比较稳定）").pack()
     tkinter.Label(tk, text="如果不幸因为意外中断了，重新再爬一次就行，会自动找到上次的中断点").pack()
     url1 = tkinter.Entry()
     url1.pack()
@@ -326,6 +327,3 @@ if __name__ == "__main__":
     url5.pack()
     tkinter.Button(tk, text="给爷爬！", command=do).pack()
     tk.mainloop()
-
-    
-    
